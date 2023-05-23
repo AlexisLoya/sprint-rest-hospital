@@ -1,4 +1,4 @@
-package med.voll.api.doctor;
+package med.voll.api.doctor.model;
 
 
 import jakarta.persistence.*;
@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.direccion.Direction;
 import med.voll.api.doctor.dto.DoctorDataRegister;
-import med.voll.api.doctor.model.Specialty;
+
 @Table(name = "doctors")
 @Entity(name = "Doctor")
 @Getter
@@ -22,16 +22,33 @@ public class Doctor {
     private String name;
     private String email;
     private String document;
+    private String phone;
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
     @Embedded
     private Direction direction;
 
+    private Boolean active;
+
     public Doctor(DoctorDataRegister data) {
         this.name = data.name();
         this.email = data.email();
+        this.phone = data.phone();
         this.document = data.document();
         this.specialty = data.specialty();
         this.direction = new Direction(data.direction());
+        this.active = true;
     }
+    public void updateData(DoctorDataRegister data) {
+        if (this.name != null){
+            this.name = data.name();
+        }
+        if (this.direction != null){
+            this.direction = new Direction(data.direction());
+        }
+    }
+    public void delete() {
+        this.active = false;
+    }
+
 }
