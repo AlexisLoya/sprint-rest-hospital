@@ -9,20 +9,20 @@ import med.voll.api.domain.direccion.DirectionData;
 import med.voll.api.domain.doctor.model.Specialty;
 
 public record DoctorDataRegister(
-        @NotBlank
+        @NotBlank(message = "{name.mandatory}")
         String name,
-        @Email
-        @NotBlank
+        @Email(message = "{email.invalid}")
+        @NotBlank(message = "{email.mandatory}")
 
         String email,
-        @NotBlank
+        @NotBlank(message = "{phone.mandatory}")
         String phone,
-        @NotBlank
-        @Pattern(regexp = "\\d{4,6}")
+        @NotBlank(message = "{document.mandatory}")
+        @Pattern(regexp = "\\d{4,6}", message = "{document.invalid}")
         String document,
-        @NotNull
+        @NotNull(message = "{specialty.mandatory}")
         Specialty specialty,
-        @NotNull
+        @NotNull(message = "{direction.mandatory}")
         @Valid
         DirectionData direction
         ) {
