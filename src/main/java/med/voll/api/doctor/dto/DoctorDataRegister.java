@@ -20,7 +20,6 @@ public record DoctorDataRegister(
         String phone,
         @NotBlank
         @Pattern(regexp = "\\d{4,6}")
-        @UniqueElements
         String document,
         @NotNull
         Specialty specialty,

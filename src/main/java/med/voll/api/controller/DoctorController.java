@@ -33,9 +33,15 @@ public class DoctorController {
 
     }
     @GetMapping
-    public Page<DoctorMedicList> getAll(@PageableDefault(size = 10, sort = "name") Pageable pageable) {
-        return repository.findAllByActiveTrue(pageable).map(DoctorMedicList::new);
+    public ResponseEntity<Page<DoctorMedicList>> getAllDoctors(@PageableDefault(size = 10, sort = "name") Pageable pageable) {
+        return ResponseEntity.ok(repository.findAllByActiveTrue(pageable).map(DoctorMedicList::new));
     }
+    @GetMapping("/{document}")
+    public ResponseEntity<DoctorDataRegister> getOneDoctor(@PathVariable String document) {
+        Doctor doctor = repository.findByDocument(document).orElseThrow();
+        return ResponseEntity.ok(doctor.toRegisterDto());
+    }
+
     @PutMapping("/{document}")
     @Transactional
     public ResponseEntity<DoctorDataRegister> update(@PathVariable String document, @RequestBody @Valid DoctorDataRegister data) {

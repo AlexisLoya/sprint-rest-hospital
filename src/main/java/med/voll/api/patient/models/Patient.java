@@ -50,4 +50,14 @@ public class Patient {
     public void delete() {
         this.active = false;
     }
+
+    public PatientRegisterData toRegisterDto() {
+        return new PatientRegisterData(
+                this.name,
+                this.email,
+                this.phone,
+                this.identityDocument,
+                this.direction.toDto()
+        );
+    }
 }
