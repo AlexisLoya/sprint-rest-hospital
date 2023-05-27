@@ -1,6 +1,6 @@
-package med.voll.api.patient.dto;
+package med.voll.api.domain.patient.dto;
 
-import med.voll.api.patient.models.Patient;
+import med.voll.api.domain.patient.models.Patient;
 
 public record PatientsList (
     String name,

@@ -1,4 +1,4 @@
-package med.voll.api.doctor.model;
+package med.voll.api.domain.doctor.model;
 
 public enum Specialty {
     CARDIOLOGIST("Cardiologista"),

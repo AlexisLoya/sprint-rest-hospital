@@ -1,9 +1,8 @@
-package med.voll.api.patient.dto;
+package med.voll.api.domain.patient.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import med.voll.api.direccion.DirectionData;
-import med.voll.api.doctor.model.Specialty;
+import med.voll.api.domain.direccion.DirectionData;
 
 public record PatientRegisterData(
         @NotBlank

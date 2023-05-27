@@ -1,13 +1,12 @@
-package med.voll.api.doctor.dto;
+package med.voll.api.domain.doctor.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import med.voll.api.direccion.DirectionData;
-import med.voll.api.doctor.model.Specialty;
-import org.hibernate.validator.constraints.UniqueElements;
+import med.voll.api.domain.direccion.DirectionData;
+import med.voll.api.domain.doctor.model.Specialty;
 
 public record DoctorDataRegister(
         @NotBlank

@@ -1,7 +1,7 @@
-package med.voll.api.patient.dto;
+package med.voll.api.domain.patient.dto;
 
 import jakarta.validation.constraints.NotNull;
-import med.voll.api.direccion.DirectionData;
+import med.voll.api.domain.direccion.DirectionData;
 
 public record PatientUpdateData(
         String name,

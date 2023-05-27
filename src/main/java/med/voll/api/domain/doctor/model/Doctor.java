@@ -1,63 +1,64 @@
-package med.voll.api.patient.models;
+package med.voll.api.domain.doctor.model;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.direccion.Direction;
-import med.voll.api.patient.dto.PatientRegisterData;
-import med.voll.api.patient.dto.PatientUpdateData;
+import med.voll.api.domain.direccion.Direction;
+import med.voll.api.domain.doctor.dto.DoctorDataRegister;
 
+@Table(name = "doctors")
+@Entity(name = "Doctor")
 @Getter
-@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Patient")
-@Table(name = "patients")
-public class Patient {
+@EqualsAndHashCode(of = "id")
+public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String email;
-    private String identityDocument;
+    private String document;
     private String phone;
-    private Boolean active = true;
-
+    @Enumerated(EnumType.STRING)
+    private Specialty specialty;
     @Embedded
     private Direction direction;
 
-    public Patient(PatientRegisterData data) {
+    private Boolean active;
+
+    public Doctor(DoctorDataRegister data) {
         this.name = data.name();
         this.email = data.email();
         this.phone = data.phone();
-        this.identityDocument = data.identityDocument();
+        this.document = data.document();
+        this.specialty = data.specialty();
         this.direction = new Direction(data.direction());
+        this.active = true;
     }
-    public void update(PatientUpdateData data) {
-        if (data.name() != null)
+    public void updateData(DoctorDataRegister data) {
+        if (this.name != null){
             this.name = data.name();
-
-        if (data.phone() != null)
-            this.phone = data.phone();
-
-        if (data.direction() != null)
+        }
+        if (this.direction != null){
             this.direction = new Direction(data.direction());
+        }
     }
-
     public void delete() {
         this.active = false;
     }
-
-    public PatientRegisterData toRegisterDto() {
-        return new PatientRegisterData(
+    public DoctorDataRegister toRegisterDto() {
+        return new DoctorDataRegister(
                 this.name,
                 this.email,
                 this.phone,
-                this.identityDocument,
+                this.document,
+                this.specialty,
                 this.direction.toDto()
         );
     }
+
 }

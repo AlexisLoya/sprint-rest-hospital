@@ -1,12 +1,11 @@
 package med.voll.api.controller;
 
-import jakarta.transaction.Status;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.doctor.dto.DoctorMedicList;
-import med.voll.api.doctor.model.Doctor;
-import med.voll.api.doctor.DoctorRepository;
-import med.voll.api.doctor.dto.DoctorDataRegister;
+import med.voll.api.domain.doctor.dto.DoctorMedicList;
+import med.voll.api.domain.doctor.model.Doctor;
+import med.voll.api.domain.doctor.DoctorRepository;
+import med.voll.api.domain.doctor.dto.DoctorDataRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/doctor")
