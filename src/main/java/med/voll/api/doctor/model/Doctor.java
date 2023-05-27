@@ -50,5 +50,15 @@ public class Doctor {
     public void delete() {
         this.active = false;
     }
+    public DoctorDataRegister toRegisterDto() {
+        return new DoctorDataRegister(
+                this.name,
+                this.email,
+                this.phone,
+                this.document,
+                this.specialty,
+                this.direction.toDto()
+        );
+    }
 
 }

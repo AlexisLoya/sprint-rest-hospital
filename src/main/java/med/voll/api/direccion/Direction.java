@@ -23,4 +23,13 @@ public class Direction {
         this.city = direction.city();
         this.state = direction.state();
     }
+    public DirectionData toDto() {
+        return new DirectionData(
+                this.street,
+                this.number,
+                this.complement,
+                this.city,
+                this.state
+        );
+    }
 }

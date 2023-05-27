@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import med.voll.api.direccion.DirectionData;
 import med.voll.api.doctor.model.Specialty;
+import org.hibernate.validator.constraints.UniqueElements;
 
 public record DoctorDataRegister(
         @NotBlank
@@ -19,8 +20,9 @@ public record DoctorDataRegister(
         String phone,
         @NotBlank
         @Pattern(regexp = "\\d{4,6}")
+        @UniqueElements
         String document,
-        @NotBlank
+        @NotNull
         Specialty specialty,
         @NotNull
         @Valid

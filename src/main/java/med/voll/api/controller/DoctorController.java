@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import jakarta.transaction.Status;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.doctor.dto.DoctorMedicList;
@@ -10,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -21,9 +25,12 @@ public class DoctorController {
     @Autowired
     private DoctorRepository repository;
     @PostMapping
-    public void registrar(@RequestBody @Valid DoctorDataRegister data) {
+    public ResponseEntity<DoctorDataRegister> registrar(@RequestBody @Valid DoctorDataRegister data, UriComponentsBuilder uriBuilder) {
         System.out.println("datos recebidos: " +data);
-        repository.save(new Doctor(data));
+        Doctor doctor = repository.save(new Doctor(data));
+        URI uri = uriBuilder.path("/doctor/{document}").buildAndExpand(doctor.getDocument()).toUri();
+        return ResponseEntity.created(uri).body(doctor.toRegisterDto());
+
     }
     @GetMapping
     public Page<DoctorMedicList> getAll(@PageableDefault(size = 10, sort = "name") Pageable pageable) {
@@ -31,15 +38,18 @@ public class DoctorController {
     }
     @PutMapping("/{document}")
     @Transactional
-    public void update(@PathVariable String document, @RequestBody @Valid DoctorDataRegister data) {
+    public ResponseEntity<DoctorDataRegister> update(@PathVariable String document, @RequestBody @Valid DoctorDataRegister data) {
         Doctor doctor = repository.findByDocument(document).orElseThrow();
         doctor.updateData(data);
         repository.save(doctor);
+        return ResponseEntity.ok(doctor.toRegisterDto());
+
     }
     @DeleteMapping("/{document}")
     @Transactional
-    public void delete(@PathVariable String document) {
+    public ResponseEntity delete(@PathVariable String document) {
         Doctor doctor = repository.findByDocument(document).orElseThrow();
         doctor.delete();
+        return ResponseEntity.noContent().build();
     }
 }
